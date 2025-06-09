@@ -70,6 +70,7 @@ Video Clip: [Frame_1, Frame_2, ..., Frame_T]
                   Fully Connected Layer
                         ↓
                 Pitch Type Classification
+```
 ---
 
 ### On-the-Fly Frame Extraction
@@ -106,6 +107,7 @@ Video Clip: [Frame_1, Frame_2, ..., Frame_T]
    ```bash
    git clone https://github.com/yourusername/mlb-pitch-recognition.git
    cd mlb-pitch-recognition
+   ```
 
 2. (Optional) Create and activate a Python virtual environment:
 
@@ -114,16 +116,20 @@ Video Clip: [Frame_1, Frame_2, ..., Frame_T]
 ```bash
 python -m venv venv
 source venv/bin/activate
+```
 
 - On Windows (PowerShell):
 
 ```powershell
 python -m venv venv
 .\venv\Scripts\activate
-Install dependencies:
+```
+
+3. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
 Usage
 Training
 Update train.py with your dataset paths and training parameters.
@@ -133,15 +139,17 @@ Run training with:
 ```bash
 python train.py
 Monitor training logs and metrics.
+```
 
 Save best-performing model checkpoints.
 
 Inference
 Use inference.py to predict pitch types on new videos:
 
-bash
+```bash
 python inference.py --video_path path/to/video.mp4
 Outputs predicted pitch type with confidence scores.
+```
 
 ## Project Structure
 
