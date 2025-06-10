@@ -152,7 +152,7 @@ Outputs predicted pitch type with confidence scores.
 ```
 
 ## Project Structure
-
+```bash
 ├── data_loader.py         # Dataset class and video processing logic
 ├── model.py               # CNN + LSTM model definition
 ├── train.py               # Training loop and utilities
@@ -161,7 +161,7 @@ Outputs predicted pitch type with confidence scores.
 ├── README.md              # Project documentation
 ├── LICENSE                # MIT License file
 └── videos/                # Example pitch video clips
-
+```
 ---
 
 ## Future Work & Roadmap
