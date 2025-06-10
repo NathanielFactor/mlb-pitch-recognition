@@ -164,6 +164,39 @@ Outputs predicted pitch type with confidence scores.
 ```
 ---
 
+## Docker
+```bash
+#1)
+# Build Docker image
+docker build -t mlb-pitch-recognition .
+
+# Run container (with mounted volume for video inputs if needed)
+docker run --gpus all -it --rm \
+  -v $(pwd)/videos:/app/videos \
+  mlb-pitch-recognition
+
+#2)
+# Build and start the container
+docker-compose up --build
+
+# If you want to run it in detached mode (background)
+docker-compose up --build -d
+
+# To stop the containers
+docker-compose down
+```
+Volumes:
+./videos:/app/videos maps your local videos folder into the container’s /app/videos so you can easily add new videos without rebuilding.
+
+Ports:
+Port 8000 exposed in case you add a web API or UI (e.g., FastAPI or Streamlit).
+
+GPU:
+The runtime: nvidia and deploy.resources block enable GPU support if you have NVIDIA Docker configured.
+If you don’t use GPU or don’t want GPU support, remove those lines.
+
+---
+
 ## Future Work & Roadmap
 
 - User Interface: Integrate Gradio or Streamlit for web-based video upload and real-time pitch prediction.

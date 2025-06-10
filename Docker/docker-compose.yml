@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  pitch_recognition:
+    build: .
+    container_name: mlb_pitch_recognition_container
+    volumes:
+      - ./videos:/app/videos   # Mount videos folder for input/output access
+      - ./:/app                # Mount entire project folder (optional, for live dev)
+    ports:
+      - "8000:8000"            # Expose port if you add a web API later
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia   # Only if you want GPU support with Nvidia Docker
+              count: 1
+              capabilities: [gpu]
+    runtime: nvidia             # Required for GPU access
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command: python inference.py --video_path videos/sample.mp4
