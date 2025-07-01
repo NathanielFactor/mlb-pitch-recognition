@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* MLB Baseball Theme Colors */
+  --mlb-red: #ba0c2f;
+  --mlb-blue: #002d72;
+  --mlb-navy: #0f1419;
+  --mlb-green: #00843d;
+  --mlb-orange: #ff8c00;
+  --mlb-gold: #ffd700;
+  
+  /* Primary Brand Colors */
+  --primary: var(--mlb-blue);
+  --primary-dark: var(--mlb-navy);
+  --secondary: var(--mlb-red);
+  --accent: var(--mlb-green);
+  --warning: var(--mlb-orange);
+  --success: var(--mlb-green);
+  
+  /* Background & Surface Colors */
+  --background: #fafafa;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --muted-light: #94a3b8;
+  
+  /* Semantic Colors */
+  --border: #e2e8f0;
+  --border-light: #f1f5f9;
+  --shadow: rgba(15, 23, 42, 0.1);
+  --shadow-strong: rgba(15, 23, 42, 0.25);
+  
+  /* Pitch Type Colors */
+  --pitch-fastball: var(--mlb-red);
+  --pitch-curveball: var(--mlb-blue);
+  --pitch-slider: var(--mlb-green);
+  --pitch-changeup: var(--mlb-orange);
+  --pitch-knuckleball: #6366f1;
+  --pitch-cutter: #8b5cf6;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-alt: #334155;
+    --foreground: #f8fafc;
+    --muted: #94a3b8;
+    --muted-light: #64748b;
+    --border: #334155;
+    --border-light: #475569;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-strong: rgba(0, 0, 0, 0.5);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+/* Baseball-themed animations */
+@keyframes baseball-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pitch-trajectory {
+  0% { 
+    transform: translateX(-100px) translateY(20px) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(0px) translateY(-10px) scale(1);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100px) translateY(20px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes stadium-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(186, 12, 47, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(186, 12, 47, 0.5); }
+}
+
+@keyframes confidence-fill {
+  0% { width: 0%; }
+  100% { width: var(--confidence-width, 0%); }
+}
+
+/* Utility classes */
+.baseball-spin {
+  animation: baseball-spin 2s linear infinite;
+}
+
+.pitch-trajectory {
+  animation: pitch-trajectory 3s ease-in-out infinite;
+}
+
+.stadium-glow {
+  animation: stadium-glow 2s ease-in-out infinite;
+}
+
+.confidence-fill {
+  animation: confidence-fill 1.5s ease-out forwards;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Baseball field gradient */
+.field-gradient {
+  background: linear-gradient(135deg, 
+    var(--mlb-green) 0%, 
+    #22c55e 50%, 
+    var(--mlb-green) 100%);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-light);
 }
