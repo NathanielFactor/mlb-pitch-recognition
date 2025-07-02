@@ -1,4 +1,20 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+// Dynamic API URL configuration for different environments
+const getApiBaseUrl = () => {
+  // Production: Use Vercel deployment URL
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  
+  // Vercel preview/production: Use same domain for API
+  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+    return `https://${window.location.hostname}`;
+  }
+  
+  // Development: Use localhost
+  return 'http://localhost:8000';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 export interface UploadResponse {
   job_id: string;
