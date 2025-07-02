@@ -21,6 +21,12 @@ class Settings:
     ALLOWED_EXTENSIONS: List[str] = [".mp4", ".avi", ".mov"]
     UPLOAD_DIR: str = os.getenv("UPLOAD_DIR", "/tmp/uploads")
     
+    # Supabase Configuration
+    SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")
+    SUPABASE_KEY: str = os.getenv("SUPABASE_KEY", "")
+    SUPABASE_SERVICE_KEY: str = os.getenv("SUPABASE_SERVICE_KEY", "")
+    SUPABASE_STORAGE_BUCKET: str = os.getenv("SUPABASE_STORAGE_BUCKET", "video-uploads")
+    
     # ML Model Configuration (for future use)
     MODEL_PATH: str = os.getenv("MODEL_PATH", "../Internal Infrastructure/src/models/")
     
