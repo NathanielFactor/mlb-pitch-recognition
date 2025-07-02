@@ -60,6 +60,8 @@ export default function UploadPage() {
           // Get final prediction result
           const result = await apiClient.getPredictionResult(jobId);
           setPredictionResult({
+            job_id: result.job_id,
+            status: result.status,
             pitch_type: result.pitch_type,
             confidence: result.confidence,
             processing_time: result.processing_time
