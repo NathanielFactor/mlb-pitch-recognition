@@ -1,5 +1,4 @@
 {
-  "version": 2,
   "builds": [
     {
       "src": "webapp/package.json",
@@ -19,16 +18,5 @@
       "src": "/(.*)",
       "dest": "/webapp/$1"
     }
-  ],
-  "env": {
-    "PYTHONPATH": "api"
-  },
-  "functions": {
-    "api/vercel_app.py": {
-      "runtime": "python3.11",
-      "maxDuration": 30
-    }
-  },
-  "outputDirectory": "webapp/.next",
-  "framework": "nextjs"
+  ]
 }
