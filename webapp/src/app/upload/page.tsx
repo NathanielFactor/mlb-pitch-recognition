@@ -6,12 +6,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, FileVideo, CheckCircle, AlertCircle, RotateCcw, History as HistoryIcon } from 'lucide-react';
 import { apiClient } from '@/lib/api';
 import { Button, Card, Badge, ProgressBar, BaseballIcon } from '@/components/ui';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast'; // Removed unused import
 
 export default function UploadPage() {
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'processing' | 'completed' | 'error'>('idle');
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [predictionResult, setPredictionResult] = useState<any>(null);
+  const [predictionResult, setPredictionResult] = useState<{
+    job_id: string;
+    status: string;
+    pitch_type?: string;
+    confidence?: number;
+    processing_time?: number;
+    error_message?: string;
+  } | null>(null);
   const [jobId, setJobId] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [statusMessage, setStatusMessage] = useState('');
@@ -332,7 +339,7 @@ export default function UploadPage() {
                         {predictionResult.pitch_type}
                       </div>
                       <Badge 
-                        variant={predictionResult.pitch_type.toLowerCase() as any}
+                        variant={predictionResult.pitch_type?.toLowerCase() as "default" | "secondary" | "destructive" | "outline"}
                         size="lg"
                         className="text-lg px-4 py-2"
                       >

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Upload, History as HistoryIcon, Zap, Target, Award } from 'lucide-react';
+import { Upload, History as HistoryIcon, Zap, Target } from 'lucide-react';
 import { Button, Card, BaseballIcon } from '@/components/ui';
 
 const containerVariants = {
