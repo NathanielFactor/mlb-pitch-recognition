@@ -18,11 +18,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
-  }
+  visible: { y: 0, opacity: 1 }
 };
 
 export default function Home() {
@@ -45,6 +41,7 @@ export default function Home() {
             <motion.h1 
               className="text-5xl md:text-7xl font-bold mb-6"
               variants={itemVariants}
+              transition={{ duration: 0.6 }}
             >
               <span className="bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
                 MLB Pitch
