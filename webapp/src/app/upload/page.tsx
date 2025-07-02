@@ -369,11 +369,11 @@ export default function UploadPage() {
                         </div>
                         <div className="text-sm font-medium text-gray-600 mb-1">Confidence Score</div>
                         <div className="text-3xl font-bold text-green-600">
-                          {(predictionResult.confidence * 100).toFixed(1)}%
+                          {predictionResult.confidence ? (predictionResult.confidence * 100).toFixed(1) : '0.0'}%
                         </div>
                         <div className="mt-3">
                           <ProgressBar 
-                            progress={predictionResult.confidence * 100} 
+                            progress={predictionResult.confidence ? predictionResult.confidence * 100 : 0} 
                             variant="success" 
                             size="sm"
                             showPercentage={false}
@@ -393,7 +393,7 @@ export default function UploadPage() {
                         </div>
                         <div className="text-sm font-medium text-gray-600 mb-1">Processing Time</div>
                         <div className="text-3xl font-bold text-blue-600">
-                          {predictionResult.processing_time}s
+                          {predictionResult.processing_time ? predictionResult.processing_time.toFixed(1) : '0.0'}s
                         </div>
                         <div className="text-sm text-gray-500 mt-2">
                           Lightning fast analysis
