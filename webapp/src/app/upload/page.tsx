@@ -341,7 +341,13 @@ export default function UploadPage() {
                         {predictionResult.pitch_type}
                       </div>
                       <Badge 
-                        variant={predictionResult.pitch_type?.toLowerCase() as "default" | "secondary" | "destructive" | "outline"}
+                        variant={(() => {
+                          const pitchType = predictionResult.pitch_type?.toLowerCase();
+                          const validVariants = ["fastball", "curveball", "slider", "changeup", "knuckleball", "cutter"];
+                          return validVariants.includes(pitchType || "") 
+                            ? pitchType as "fastball" | "curveball" | "slider" | "changeup" | "knuckleball" | "cutter"
+                            : "default";
+                        })()}
                         size="lg"
                         className="text-lg px-4 py-2"
                       >
