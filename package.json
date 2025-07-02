@@ -1,0 +1,54 @@
+{
+  "name": "mlb-pitch-recognition",
+  "version": "1.0.0",
+  "description": "MLB pitch recognition system with web and mobile applications",
+  "private": true,
+  "workspaces": [
+    "webapp",
+    "mobile",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\" \"npm run dev:mobile\"",
+    "dev:web": "cd webapp && npm run dev",
+    "dev:mobile": "cd mobile && npm start",
+    "dev:api": "cd api && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "build": "npm run build:web && npm run build:mobile",
+    "build:web": "cd webapp && npm run build",
+    "build:mobile": "cd mobile && npx expo build",
+    "build:shared": "cd shared && npm run build",
+    "lint": "npm run lint:web && npm run lint:mobile",
+    "lint:web": "cd webapp && npm run lint",
+    "lint:mobile": "cd mobile && npx expo lint",
+    "type-check": "npm run type-check:web && npm run type-check:shared",
+    "type-check:web": "cd webapp && npm run type-check || echo 'Web type-check not available'",
+    "type-check:shared": "cd shared && npm run type-check",
+    "install:all": "npm install && cd webapp && npm install && cd ../mobile && npm install && cd ../shared && npm install",
+    "clean": "rm -rf webapp/node_modules mobile/node_modules shared/node_modules node_modules webapp/.next mobile/.expo shared/dist",
+    "docker:dev": "docker-compose -f docker/docker-compose.dev.yml up --build",
+    "docker:down": "docker-compose -f docker/docker-compose.dev.yml down"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/mlb-pitch-recognition.git"
+  },
+  "keywords": [
+    "mlb",
+    "pitch",
+    "recognition",
+    "ai",
+    "machine-learning",
+    "react-native",
+    "nextjs",
+    "fastapi"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
