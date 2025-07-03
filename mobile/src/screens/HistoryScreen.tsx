@@ -104,7 +104,7 @@ const HistoryScreen: React.FC = () => {
       <View style={styles.itemHeader}>
         <View style={styles.fileInfo}>
           <View style={styles.videoIcon}>
-            <Ionicons name="videocam" size={20} color="#007AFF" />
+            <Ionicons name="videocam" size={20} color="rgba(255, 255, 255, 0.9)" />
           </View>
           <View style={styles.fileDetails}>
             <Text style={styles.filename} numberOfLines={1}>
@@ -132,7 +132,7 @@ const HistoryScreen: React.FC = () => {
           </View>
           <View style={styles.metric}>
             <View style={styles.metricIcon}>
-              <Ionicons name="time" size={14} color="rgba(0, 0, 0, 0.6)" />
+              <Ionicons name="time" size={14} color="rgba(255, 255, 255, 0.6)" />
             </View>
             <Text style={styles.processingTime}>{item.processing_time}s processing</Text>
           </View>
@@ -144,7 +144,7 @@ const HistoryScreen: React.FC = () => {
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
       <View style={styles.emptyIcon}>
-        <Ionicons name="list-outline" size={48} color="rgba(0, 0, 0, 0.3)" />
+        <Ionicons name="list-outline" size={48} color="rgba(255, 255, 255, 0.3)" />
       </View>
       <Text style={styles.emptyTitle}>No Analysis History</Text>
       <Text style={styles.emptySubtitle}>
@@ -173,7 +173,7 @@ const HistoryScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(242, 242, 247, 1)',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
   },
   list: {
     flex: 1,
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 12,
@@ -214,12 +214,12 @@ const styles = StyleSheet.create({
   filename: {
     fontSize: 16,
     fontWeight: '600',
-    color: 'rgba(0, 0, 0, 0.9)',
+    color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 2,
   },
   date: {
     fontSize: 13,
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   itemContent: {
     gap: 12,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   pitchType: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#007AFF',
+    color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 8,
   },
   metrics: {
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   },
   processingTime: {
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   emptyState: {
     alignItems: 'center',
@@ -270,12 +270,12 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 22,
     fontWeight: '700',
-    color: 'rgba(0, 0, 0, 0.9)',
+    color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 8,
   },
   emptySubtitle: {
     fontSize: 16,
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: 'rgba(255, 255, 255, 0.6)',
     textAlign: 'center',
     lineHeight: 24,
     maxWidth: 280,

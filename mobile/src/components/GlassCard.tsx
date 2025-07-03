@@ -1,20 +1,30 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { glassCard } from '../../../shared/src/design';
 
 interface GlassCardProps {
   children: React.ReactNode;
   variant?: 'base' | 'elevated' | 'floating';
   style?: ViewStyle;
+  hover?: boolean;
+  glow?: boolean;
 }
 
 const GlassCard: React.FC<GlassCardProps> = ({ 
   children, 
   variant = 'base', 
-  style 
+  style,
+  hover = true,
+  glow = false
 }) => {
+  const combinedStyles = [
+    styles.base,
+    styles[variant],
+    glow && styles.glow,
+    style
+  ];
+
   return (
-    <View style={[styles[variant], style]}>
+    <View style={combinedStyles}>
       {children}
     </View>
   );
@@ -22,37 +32,42 @@ const GlassCard: React.FC<GlassCardProps> = ({
 
 const styles = StyleSheet.create({
   base: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
     borderRadius: 16,
-    shadowColor: 'rgba(0, 0, 0, 0.15)',
-    shadowOffset: { width: 0, height: 4 },
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 1,
-    shadowRadius: 8,
+    shadowRadius: 25,
     elevation: 4,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderWidth: 1,
+    overflow: 'hidden',
   },
   elevated: {
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
     borderRadius: 16,
-    shadowColor: 'rgba(0, 0, 0, 0.2)',
-    shadowOffset: { width: 0, height: 8 },
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 20 },
     shadowOpacity: 1,
-    shadowRadius: 16,
+    shadowRadius: 25,
     elevation: 8,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   floating: {
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
     borderRadius: 24,
     shadowColor: 'rgba(0, 0, 0, 0.25)',
-    shadowOffset: { width: 0, height: 16 },
+    shadowOffset: { width: 0, height: 25 },
     shadowOpacity: 1,
-    shadowRadius: 24,
+    shadowRadius: 50,
     elevation: 12,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  glow: {
+    shadowColor: 'rgba(255, 255, 255, 0.25)',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 20,
   },
 });
 

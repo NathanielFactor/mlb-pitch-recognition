@@ -150,7 +150,7 @@ const UploadScreen: React.FC = () => {
               icon={isUploading ? 'sync' : 'cloud-upload'}
               variant="primary"
               size="lg"
-              disabled={isUploading}
+              loading={isUploading}
               style={styles.uploadButton}
             />
           </GlassCard>
@@ -195,7 +195,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(242, 242, 247, 1)',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
   },
   content: {
     padding: 20,

@@ -27,7 +27,7 @@ const HomeScreen: React.FC = () => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <ImageBackground
-        source={{ uri: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwN0FGRjtzdG9wLW9wYWNpdHk6MC4xIiAvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzNEM3NTk7c3RvcC1vcGFjaXR5OjAuMSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0idXJsKCNncmFkaWVudCkiLz4KPHN2Zz4K' }}
+        source={null}
         style={styles.backgroundGradient}
         resizeMode="cover"
       >
@@ -121,11 +121,12 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(242, 242, 247, 1)',
+    backgroundColor: 'rgba(0, 0, 0, 1)',
   },
   backgroundGradient: {
     flex: 1,
     minHeight: height,
+    backgroundColor: 'rgba(0, 0, 0, 1)',
   },
   content: {
     padding: 20,

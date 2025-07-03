@@ -4,7 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 interface GlassBadgeProps {
   text: string;
-  variant?: 'default' | 'success' | 'warning' | 'error';
+  variant?: 'fastball' | 'curveball' | 'slider' | 'changeup' | 'knuckleball' | 'cutter' | 'success' | 'warning' | 'error' | 'default';
+  size?: 'sm' | 'md' | 'lg';
   icon?: keyof typeof Ionicons.glyphMap;
   style?: ViewStyle;
   textStyle?: TextStyle;
@@ -13,6 +14,7 @@ interface GlassBadgeProps {
 const GlassBadge: React.FC<GlassBadgeProps> = ({
   text,
   variant = 'default',
+  size = 'md',
   icon,
   style,
   textStyle,
@@ -20,21 +22,23 @@ const GlassBadge: React.FC<GlassBadgeProps> = ({
   const badgeStyle = [
     styles.base,
     styles[variant],
+    styles[size],
     style,
   ];
 
   const textStyles = [
     styles.text,
     styles[`${variant}Text` as keyof typeof styles],
+    styles[`${size}Text` as keyof typeof styles],
     textStyle,
   ];
 
   const getIconColor = () => {
     switch (variant) {
-      case 'success': return '#34C759';
-      case 'warning': return '#FF9500';
-      case 'error': return '#FF3B30';
-      default: return 'rgba(0, 0, 0, 0.6)';
+      case 'success': return 'rgba(255, 255, 255, 0.9)';
+      case 'warning': return 'rgba(255, 255, 255, 0.9)';
+      case 'error': return 'rgba(255, 255, 255, 0.9)';
+      default: return 'rgba(255, 255, 255, 0.9)';
     }
   };
 
@@ -43,7 +47,7 @@ const GlassBadge: React.FC<GlassBadgeProps> = ({
       {icon && (
         <Ionicons
           name={icon}
-          size={12}
+          size={size === 'sm' ? 10 : size === 'lg' ? 14 : 12}
           color={getIconColor()}
           style={styles.icon}
         />
@@ -58,50 +62,115 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    fontWeight: '500',
     borderRadius: 9999,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
     alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   
   // Variants
-  default: {
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+  fastball: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  curveball: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  slider: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  changeup: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  knuckleball: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  cutter: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   success: {
-    backgroundColor: 'rgba(52, 199, 89, 0.2)',
-    borderColor: '#34C759',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   warning: {
-    backgroundColor: 'rgba(255, 149, 0, 0.2)',
-    borderColor: '#FF9500',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
   },
   error: {
-    backgroundColor: 'rgba(255, 59, 48, 0.2)',
-    borderColor: '#FF3B30',
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  default: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+  },
+  
+  // Sizes
+  sm: {
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+  },
+  md: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+  },
+  lg: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
   },
   
   // Text styles
   text: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
     fontFamily: 'system-ui',
   },
-  defaultText: {
-    color: 'rgba(0, 0, 0, 0.9)',
+  fastballText: {
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  curveballText: {
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  sliderText: {
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  changeupText: {
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  knuckleballText: {
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  cutterText: {
+    color: 'rgba(255, 255, 255, 0.9)',
   },
   successText: {
-    color: '#34C759',
+    color: 'rgba(255, 255, 255, 0.9)',
   },
   warningText: {
-    color: '#FF9500',
+    color: 'rgba(255, 255, 255, 0.9)',
   },
   errorText: {
-    color: '#FF3B30',
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  defaultText: {
+    color: 'rgba(255, 255, 255, 0.9)',
+  },
+  
+  // Size-specific text
+  smText: {
+    fontSize: 12,
+  },
+  mdText: {
+    fontSize: 14,
+  },
+  lgText: {
+    fontSize: 16,
   },
   
   icon: {

@@ -36,18 +36,19 @@ const AppNavigator: React.FC = () => {
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#007AFF',
-          tabBarInactiveTintColor: 'rgba(0, 0, 0, 0.4)',
+          tabBarActiveTintColor: 'rgba(255, 255, 255, 0.9)',
+          tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.4)',
           tabBarStyle: {
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            borderTopWidth: 0,
+            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+            borderTopWidth: 1,
+            borderTopColor: 'rgba(255, 255, 255, 0.2)',
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             paddingTop: 8,
             paddingBottom: Platform.OS === 'ios' ? 28 : 8,
             height: Platform.OS === 'ios' ? 88 : 64,
             position: 'absolute',
-            shadowColor: 'rgba(0, 0, 0, 0.15)',
+            shadowColor: 'rgba(0, 0, 0, 0.25)',
             shadowOffset: { width: 0, height: -4 },
             shadowOpacity: 1,
             shadowRadius: 16,
@@ -55,7 +56,7 @@ const AppNavigator: React.FC = () => {
           },
           tabBarLabelStyle: {
             fontSize: 12,
-            fontWeight: '600',
+            fontWeight: '500',
             marginTop: 4,
           },
           headerShown: false,
