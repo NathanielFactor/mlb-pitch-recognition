@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, FileVideo, CheckCircle, AlertCircle, RotateCcw, History as HistoryIcon } from 'lucide-react';
 import { apiClient } from '@/lib/api';
-import { Button, Card, Badge, ProgressBar, BaseballIcon } from '@/components/ui';
+import { Button, Card, Badge, ProgressBar } from '@/components/ui';
 // import toast from 'react-hot-toast'; // Removed unused import
 
 export default function UploadPage() {
@@ -231,7 +231,7 @@ export default function UploadPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Card gradient glow className="relative overflow-hidden">
+              <Card variant="elevated" className="relative overflow-hidden">
                 {/* Baseball trajectory animation */}
                 <div className="absolute top-4 left-0 right-0">
                   <motion.div
@@ -241,9 +241,6 @@ export default function UploadPage() {
                 </div>
                 
                 <div className="p-8">
-                  <div className="flex items-center justify-center mb-6">
-                    <BaseballIcon size={64} spinning />
-                  </div>
                   
                   <div className="text-center">
                     <h3 className="text-2xl font-bold text-white mb-2">
@@ -295,9 +292,9 @@ export default function UploadPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
             >
-              <Card gradient className="relative overflow-hidden">
+              <Card variant="elevated" className="relative overflow-hidden">
                 {/* Success celebration effect */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-blue-500 to-green-400" />
+                <div className="absolute top-0 left-0 right-0 h-1 bg-white/30" />
                 
                 <div className="p-8">
                   {/* Header */}
@@ -357,11 +354,11 @@ export default function UploadPage() {
                       transition={{ duration: 0.5, delay: 0.4 }}
                     >
                       <Card hover className="text-center p-6">
-                        <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div className="w-12 h-12 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center mx-auto mb-4">
                           <CheckCircle className="w-6 h-6 text-white" />
                         </div>
-                        <div className="text-sm font-medium text-gray-600 mb-1">Confidence Score</div>
-                        <div className="text-3xl font-bold text-green-600">
+                        <div className="text-sm font-medium text-white/70 mb-1">Confidence Score</div>
+                        <div className="text-3xl font-bold text-white">
                           {predictionResult.confidence ? (predictionResult.confidence * 100).toFixed(1) : '0.0'}%
                         </div>
                         <div className="mt-3">
@@ -381,11 +378,11 @@ export default function UploadPage() {
                       transition={{ duration: 0.5, delay: 0.5 }}
                     >
                       <Card hover className="text-center p-6">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                          <BaseballIcon size={24} />
+                        <div className="w-12 h-12 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <CheckCircle className="w-6 h-6 text-white" />
                         </div>
-                        <div className="text-sm font-medium text-gray-600 mb-1">Processing Time</div>
-                        <div className="text-3xl font-bold text-blue-600">
+                        <div className="text-sm font-medium text-white/70 mb-1">Processing Time</div>
+                        <div className="text-3xl font-bold text-white">
                           {predictionResult.processing_time ? predictionResult.processing_time.toFixed(1) : '0.0'}s
                         </div>
                         <div className="text-sm text-white/50 mt-2">
@@ -400,11 +397,11 @@ export default function UploadPage() {
                       transition={{ duration: 0.5, delay: 0.6 }}
                     >
                       <Card hover className="text-center p-6">
-                        <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <div className="w-12 h-12 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center mx-auto mb-4">
                           <FileVideo className="w-6 h-6 text-white" />
                         </div>
-                        <div className="text-sm font-medium text-gray-600 mb-1">Video File</div>
-                        <div className="text-lg font-bold text-purple-600 truncate">
+                        <div className="text-sm font-medium text-white/70 mb-1">Video File</div>
+                        <div className="text-lg font-bold text-white truncate">
                           {uploadedFile?.name}
                         </div>
                         <div className="text-sm text-white/50 mt-2">
@@ -455,7 +452,7 @@ export default function UploadPage() {
                       transition={{ duration: 0.5, delay: 0.1 }}
                       className="flex justify-center mb-4"
                     >
-                      <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center">
                         <AlertCircle className="w-8 h-8 text-white" />
                       </div>
                     </motion.div>

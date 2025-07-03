@@ -62,6 +62,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: rgba(0, 0, 0, 1);

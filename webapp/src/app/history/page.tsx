@@ -35,7 +35,7 @@ export default function HistoryPage() {
     }
   ];
 
-  const getPitchTypeColor = (pitchType: string) => {
+  const getPitchTypeColor = () => {
     return 'bg-white/15 text-white border border-white/25';
   };
 
@@ -83,7 +83,7 @@ export default function HistoryPage() {
                             <p className="text-sm font-medium text-white truncate">
                               {item.filename}
                             </p>
-                            <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium backdrop-blur-md ${getPitchTypeColor(item.pitch_type)}`}>
+                            <span className={`ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium backdrop-blur-md ${getPitchTypeColor()}`}>
                               {item.pitch_type}
                             </span>
                           </div>
