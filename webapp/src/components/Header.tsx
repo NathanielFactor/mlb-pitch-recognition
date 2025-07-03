@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Menu, X, Activity } from 'lucide-react';
 import { useState } from 'react';
-import { BaseballIcon } from './ui';
 
 export default function Header() {
   const pathname = usePathname();
@@ -29,7 +28,7 @@ export default function Header() {
               whileHover={{ scale: 1.1, rotate: 180 }}
               transition={{ duration: 0.3 }}
             >
-              <BaseballIcon size={32} className="text-white" />
+              <Activity size={32} className="text-white" />
             </motion.div>
             <Link href="/" className="flex items-center space-x-2">
               <span className="text-xl font-bold text-white">

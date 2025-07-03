@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 :root {
+  /* Font Variables */
+  --font-geist-sans: 'Geist', system-ui, -apple-system, sans-serif;
+  --font-geist-mono: 'Geist Mono', ui-monospace, monospace;
+  
   /* Glass Design System Colors */
   --glass-primary: rgba(255, 255, 255, 0.8);
   --glass-secondary: rgba(255, 255, 255, 0.6);
