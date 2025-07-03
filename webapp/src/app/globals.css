@@ -1,51 +1,60 @@
 @import "tailwindcss";
 
 :root {
-  /* MLB Baseball Theme Colors */
-  --mlb-red: #ba0c2f;
-  --mlb-blue: #002d72;
-  --mlb-navy: #0f1419;
-  --mlb-green: #00843d;
-  --mlb-orange: #ff8c00;
-  --mlb-gold: #ffd700;
+  /* Glass Design System Colors */
+  --glass-primary: rgba(255, 255, 255, 0.8);
+  --glass-secondary: rgba(255, 255, 255, 0.6);
+  --glass-tertiary: rgba(255, 255, 255, 0.4);
+  --glass-overlay: rgba(255, 255, 255, 0.2);
   
-  /* Primary Brand Colors */
-  --primary: var(--mlb-blue);
-  --primary-dark: var(--mlb-navy);
-  --secondary: var(--mlb-red);
-  --accent: var(--mlb-green);
-  --warning: var(--mlb-orange);
-  --success: var(--mlb-green);
+  /* Dark Glass Variants */
+  --dark-glass-primary: rgba(28, 28, 30, 0.8);
+  --dark-glass-secondary: rgba(28, 28, 30, 0.6);
+  --dark-glass-tertiary: rgba(28, 28, 30, 0.4);
+  --dark-glass-overlay: rgba(28, 28, 30, 0.2);
+  
+  /* System Colors */
+  --system-blue: #007AFF;
+  --system-green: #34C759;
+  --system-orange: #FF9500;
+  --system-red: #FF3B30;
+  --system-purple: #AF52DE;
+  --system-indigo: #5856D6;
+  
+  /* Baseball Pitch Type Colors (Glass Style) */
+  --pitch-fastball: rgba(255, 255, 255, 0.15);
+  --pitch-curveball: rgba(255, 255, 255, 0.15);
+  --pitch-slider: rgba(255, 255, 255, 0.15);
+  --pitch-changeup: rgba(255, 255, 255, 0.15);
+  --pitch-knuckleball: rgba(255, 255, 255, 0.15);
+  --pitch-cutter: rgba(255, 255, 255, 0.15);
   
   /* Background & Surface Colors */
-  --background: #fafafa;
-  --surface: #ffffff;
-  --surface-alt: #f8fafc;
-  --foreground: #0f172a;
-  --muted: #64748b;
-  --muted-light: #94a3b8;
+  --background: rgba(242, 242, 247, 1);
+  --surface: var(--glass-primary);
+  --surface-elevated: var(--glass-secondary);
+  --surface-floating: var(--glass-tertiary);
+  --foreground: rgba(0, 0, 0, 0.9);
+  --muted: rgba(0, 0, 0, 0.6);
+  --muted-light: rgba(0, 0, 0, 0.4);
   
-  /* Semantic Colors */
-  --border: #e2e8f0;
-  --border-light: #f1f5f9;
-  --shadow: rgba(15, 23, 42, 0.1);
-  --shadow-strong: rgba(15, 23, 42, 0.25);
+  /* Border Colors */
+  --border: rgba(0, 0, 0, 0.1);
+  --border-light: rgba(255, 255, 255, 0.2);
+  --border-strong: rgba(0, 0, 0, 0.2);
   
-  /* Pitch Type Colors */
-  --pitch-fastball: var(--mlb-red);
-  --pitch-curveball: var(--mlb-blue);
-  --pitch-slider: var(--mlb-green);
-  --pitch-changeup: var(--mlb-orange);
-  --pitch-knuckleball: #6366f1;
-  --pitch-cutter: #8b5cf6;
+  /* Shadow Colors */
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-strong: rgba(0, 0, 0, 0.25);
+  --shadow-floating: rgba(0, 0, 0, 0.15);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
+  --color-primary: var(--system-blue);
+  --color-secondary: var(--system-green);
+  --color-accent: var(--system-orange);
   --color-surface: var(--surface);
   --color-muted: var(--muted);
   --color-border: var(--border);
@@ -55,16 +64,19 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
-    --surface: #1e293b;
-    --surface-alt: #334155;
-    --foreground: #f8fafc;
-    --muted: #94a3b8;
-    --muted-light: #64748b;
-    --border: #334155;
-    --border-light: #475569;
+    --background: rgba(0, 0, 0, 1);
+    --surface: var(--dark-glass-primary);
+    --surface-elevated: var(--dark-glass-secondary);
+    --surface-floating: var(--dark-glass-tertiary);
+    --foreground: rgba(255, 255, 255, 0.9);
+    --muted: rgba(255, 255, 255, 0.6);
+    --muted-light: rgba(255, 255, 255, 0.4);
+    --border: rgba(255, 255, 255, 0.1);
+    --border-light: rgba(255, 255, 255, 0.05);
+    --border-strong: rgba(255, 255, 255, 0.2);
     --shadow: rgba(0, 0, 0, 0.3);
     --shadow-strong: rgba(0, 0, 0, 0.5);
+    --shadow-floating: rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -73,85 +85,163 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   line-height: 1.6;
+  background-image: 
+    radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at bottom right, rgba(255, 255, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+  background-attachment: fixed;
 }
 
-/* Baseball-themed animations */
-@keyframes baseball-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes pitch-trajectory {
+/* Glass-style animations */
+@keyframes glass-spring {
   0% { 
-    transform: translateX(-100px) translateY(20px) scale(0.8);
+    transform: scale(0.95) translateY(4px);
     opacity: 0;
   }
   50% {
-    transform: translateX(0px) translateY(-10px) scale(1);
+    transform: scale(1.02) translateY(-2px);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes glass-float {
+  0%, 100% { 
+    transform: translateY(0px);
+    box-shadow: 0 10px 25px -5px var(--shadow);
+  }
+  50% { 
+    transform: translateY(-4px);
+    box-shadow: 0 20px 35px -5px var(--shadow-floating);
+  }
+}
+
+@keyframes backdrop-blur-in {
+  0% { 
+    backdrop-filter: blur(0px);
+    background-color: transparent;
+  }
+  100% { 
+    backdrop-filter: blur(16px);
+    background-color: var(--glass-primary);
+  }
+}
+
+@keyframes confidence-reveal {
+  0% { 
+    width: 0%; 
+    opacity: 0;
+  }
+  50% {
     opacity: 1;
   }
   100% { 
-    transform: translateX(100px) translateY(20px) scale(0.8);
-    opacity: 0;
+    width: var(--confidence-width, 0%);
+    opacity: 1;
   }
 }
 
-@keyframes stadium-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(186, 12, 47, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(186, 12, 47, 0.5); }
-}
-
-@keyframes confidence-fill {
-  0% { width: 0%; }
-  100% { width: var(--confidence-width, 0%); }
-}
-
 /* Utility classes */
-.baseball-spin {
-  animation: baseball-spin 2s linear infinite;
+.glass-spring {
+  animation: glass-spring 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.pitch-trajectory {
-  animation: pitch-trajectory 3s ease-in-out infinite;
+.glass-float {
+  animation: glass-float 3s ease-in-out infinite;
 }
 
-.stadium-glow {
-  animation: stadium-glow 2s ease-in-out infinite;
+.backdrop-blur-in {
+  animation: backdrop-blur-in 0.3s ease-out forwards;
 }
 
-.confidence-fill {
-  animation: confidence-fill 1.5s ease-out forwards;
+.confidence-reveal {
+  animation: confidence-reveal 1.2s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
 }
 
-/* Glass morphism effect */
+/* Enhanced glass morphism effects */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--glass-primary);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
 }
 
-/* Baseball field gradient */
+.glass-elevated {
+  background: var(--glass-secondary);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-light);
+}
+
+.glass-floating {
+  background: var(--glass-tertiary);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-light);
+}
+
+/* Glass-style interactive states */
+.glass-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.glass-interactive:hover {
+  background: var(--glass-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px var(--shadow-floating);
+}
+
+.glass-interactive:active {
+  transform: translateY(0px);
+  transition: all 0.1s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Baseball field gradient with glass effect */
 .field-gradient {
   background: linear-gradient(135deg, 
-    var(--mlb-green) 0%, 
-    #22c55e 50%, 
-    var(--mlb-green) 100%);
+    rgba(52, 199, 89, 0.3) 0%, 
+    rgba(52, 199, 89, 0.1) 50%, 
+    rgba(52, 199, 89, 0.3) 100%);
+  backdrop-filter: blur(12px);
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar with glass styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--surface-alt);
+  background: var(--glass-overlay);
+  backdrop-filter: blur(8px);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--muted);
+  background: var(--glass-secondary);
   border-radius: 4px;
+  backdrop-filter: blur(8px);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-light);
+  background: var(--glass-primary);
+}
+
+/* Focus states with glass effects */
+.focus-glass:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+  background: var(--glass-primary);
+}
+
+/* Glass-style text selection */
+::selection {
+  background: rgba(0, 122, 255, 0.3);
+  color: var(--foreground);
+}
+
+::-moz-selection {
+  background: rgba(0, 122, 255, 0.3);
+  color: var(--foreground);
 }

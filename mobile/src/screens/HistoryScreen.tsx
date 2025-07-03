@@ -4,10 +4,10 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
   RefreshControl,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { GlassCard, GlassBadge } from '../components';
 
 interface HistoryItem {
   id: string;
@@ -88,49 +88,67 @@ const HistoryScreen: React.FC = () => {
   };
 
   const getConfidenceColor = (confidence: number): string => {
-    if (confidence >= 0.9) return '#10b981';
-    if (confidence >= 0.7) return '#f59e0b';
-    return '#ef4444';
+    if (confidence >= 0.9) return '#34C759';
+    if (confidence >= 0.7) return '#FF9500';
+    return '#FF3B30';
+  };
+
+  const getConfidenceVariant = (confidence: number): 'success' | 'warning' | 'error' => {
+    if (confidence >= 0.9) return 'success';
+    if (confidence >= 0.7) return 'warning';
+    return 'error';
   };
 
   const renderHistoryItem = ({ item }: { item: HistoryItem }) => (
-    <TouchableOpacity style={styles.historyItem}>
+    <GlassCard style={styles.historyItem}>
       <View style={styles.itemHeader}>
         <View style={styles.fileInfo}>
-          <Ionicons name="videocam" size={20} color="#6b7280" />
-          <Text style={styles.filename} numberOfLines={1}>
-            {item.filename}
-          </Text>
+          <View style={styles.videoIcon}>
+            <Ionicons name="videocam" size={20} color="#007AFF" />
+          </View>
+          <View style={styles.fileDetails}>
+            <Text style={styles.filename} numberOfLines={1}>
+              {item.filename}
+            </Text>
+            <Text style={styles.date}>{formatDate(item.upload_date)}</Text>
+          </View>
         </View>
-        <Text style={styles.date}>{formatDate(item.upload_date)}</Text>
+        <GlassBadge 
+          text={item.pitch_type} 
+          variant={getConfidenceVariant(item.confidence)}
+        />
       </View>
       
       <View style={styles.itemContent}>
-        <View style={styles.pitchInfo}>
-          <Text style={styles.pitchType}>{formatPitchType(item.pitch_type)}</Text>
-          <View style={styles.metrics}>
-            <View style={styles.metric}>
-              <Ionicons name="analytics" size={16} color={getConfidenceColor(item.confidence)} />
-              <Text style={[styles.confidence, { color: getConfidenceColor(item.confidence) }]}>
-                {Math.round(item.confidence * 100)}%
-              </Text>
+        <Text style={styles.pitchType}>{formatPitchType(item.pitch_type)}</Text>
+        <View style={styles.metrics}>
+          <View style={styles.metric}>
+            <View style={styles.metricIcon}>
+              <Ionicons name="analytics" size={14} color={getConfidenceColor(item.confidence)} />
             </View>
-            <View style={styles.metric}>
-              <Ionicons name="time" size={16} color="#6b7280" />
-              <Text style={styles.processingTime}>{item.processing_time}s</Text>
+            <Text style={[styles.confidence, { color: getConfidenceColor(item.confidence) }]}>
+              {Math.round(item.confidence * 100)}% confidence
+            </Text>
+          </View>
+          <View style={styles.metric}>
+            <View style={styles.metricIcon}>
+              <Ionicons name="time" size={14} color="rgba(0, 0, 0, 0.6)" />
             </View>
+            <Text style={styles.processingTime}>{item.processing_time}s processing</Text>
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </GlassCard>
   );
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Ionicons name="list-outline" size={64} color="#d1d5db" />
-      <Text style={styles.emptyTitle}>No History Yet</Text>
+      <View style={styles.emptyIcon}>
+        <Ionicons name="list-outline" size={48} color="rgba(0, 0, 0, 0.3)" />
+      </View>
+      <Text style={styles.emptyTitle}>No Analysis History</Text>
       <Text style={styles.emptySubtitle}>
-        Upload your first pitch video to see analysis results here
+        Upload your first pitch video to see results here
       </Text>
     </View>
   );
@@ -155,97 +173,112 @@ const HistoryScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'rgba(242, 242, 247, 1)',
   },
   list: {
     flex: 1,
     padding: 16,
+    paddingTop: 60,
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
   },
   historyItem: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
+    padding: 20,
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   fileInfo: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
   },
+  videoIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0, 122, 255, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  fileDetails: {
+    flex: 1,
+  },
   filename: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1f2937',
-    marginLeft: 8,
-    flex: 1,
+    color: 'rgba(0, 0, 0, 0.9)',
+    marginBottom: 2,
   },
   date: {
-    fontSize: 12,
-    color: '#6b7280',
+    fontSize: 13,
+    color: 'rgba(0, 0, 0, 0.6)',
   },
   itemContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  pitchInfo: {
-    flex: 1,
+    gap: 12,
   },
   pitchType: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1e40af',
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#007AFF',
     marginBottom: 8,
   },
   metrics: {
-    flexDirection: 'row',
-    gap: 16,
+    gap: 8,
   },
   metric: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  metricIcon: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+  },
   confidence: {
     fontSize: 14,
-    fontWeight: '600',
-    marginLeft: 4,
+    fontWeight: '500',
   },
   processingTime: {
     fontSize: 14,
-    color: '#6b7280',
-    marginLeft: 4,
+    color: 'rgba(0, 0, 0, 0.6)',
   },
   emptyState: {
     alignItems: 'center',
     padding: 40,
   },
+  emptyIcon: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
   emptyTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginTop: 16,
+    fontSize: 22,
+    fontWeight: '700',
+    color: 'rgba(0, 0, 0, 0.9)',
     marginBottom: 8,
   },
   emptySubtitle: {
     fontSize: 16,
-    color: '#6b7280',
+    color: 'rgba(0, 0, 0, 0.6)',
     textAlign: 'center',
     lineHeight: 24,
+    maxWidth: 280,
   },
 });
 

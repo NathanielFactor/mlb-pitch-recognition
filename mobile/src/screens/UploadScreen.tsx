@@ -3,13 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Alert,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
+import { GlassCard, GlassButton, GlassBadge } from '../components';
 
 const UploadScreen: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
@@ -89,187 +90,223 @@ const UploadScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.content}>
-        <Text style={styles.title}>Upload Pitch Video</Text>
-        <Text style={styles.subtitle}>
-          Record a new video or select from your gallery
-        </Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>Upload Pitch Video</Text>
+          <Text style={styles.subtitle}>
+            Record a new video or select from your gallery
+          </Text>
+        </View>
 
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.actionButton} onPress={recordVideo}>
-            <Ionicons name="camera" size={32} color="#1e40af" />
-            <Text style={styles.actionText}>Record Video</Text>
-          </TouchableOpacity>
+          <GlassCard style={styles.actionCard}>
+            <GlassButton
+              title="Record Video"
+              onPress={recordVideo}
+              icon="camera"
+              variant="floating"
+              size="lg"
+              style={styles.actionButton}
+            />
+            <Text style={styles.actionDescription}>
+              Capture a pitch in real-time
+            </Text>
+          </GlassCard>
 
-          <TouchableOpacity style={styles.actionButton} onPress={selectFromGallery}>
-            <Ionicons name="images" size={32} color="#1e40af" />
-            <Text style={styles.actionText}>Select from Gallery</Text>
-          </TouchableOpacity>
+          <GlassCard style={styles.actionCard}>
+            <GlassButton
+              title="Select from Gallery"
+              onPress={selectFromGallery}
+              icon="images"
+              variant="secondary"
+              size="lg"
+              style={styles.actionButton}
+            />
+            <Text style={styles.actionDescription}>
+              Choose from existing videos
+            </Text>
+          </GlassCard>
         </View>
 
         {selectedVideo && (
-          <View style={styles.selectedVideo}>
-            <Ionicons name="videocam" size={48} color="#10b981" />
-            <Text style={styles.videoSelectedText}>Video Selected</Text>
-            <Text style={styles.videoPath} numberOfLines={1} ellipsizeMode="middle">
-              {selectedVideo}
-            </Text>
+          <GlassCard variant="elevated" style={styles.selectedVideo}>
+            <View style={styles.videoPreview}>
+              <View style={styles.videoIcon}>
+                <Ionicons name="videocam" size={32} color="rgba(255, 255, 255, 0.9)" />
+              </View>
+              <View style={styles.videoInfo}>
+                <Text style={styles.videoSelectedText}>Video Ready</Text>
+                <Text style={styles.videoPath} numberOfLines={1} ellipsizeMode="middle">
+                  {selectedVideo.split('/').pop()}
+                </Text>
+              </View>
+              <GlassBadge text="Ready" variant="success" icon="checkmark-circle" />
+            </View>
             
-            <TouchableOpacity
-              style={[styles.uploadButton, isUploading && styles.uploadButtonDisabled]}
+            <GlassButton
+              title={isUploading ? 'Uploading...' : 'Analyze Video'}
               onPress={uploadVideo}
+              icon={isUploading ? 'sync' : 'cloud-upload'}
+              variant="primary"
+              size="lg"
               disabled={isUploading}
-            >
-              {isUploading ? (
-                <Ionicons name="sync" size={24} color="white" />
-              ) : (
-                <Ionicons name="cloud-upload" size={24} color="white" />
-              )}
-              <Text style={styles.uploadButtonText}>
-                {isUploading ? 'Uploading...' : 'Upload Video'}
-              </Text>
-            </TouchableOpacity>
-          </View>
+              style={styles.uploadButton}
+            />
+          </GlassCard>
         )}
 
-        <View style={styles.tips}>
+        <GlassCard style={styles.tips}>
           <Text style={styles.tipsTitle}>Tips for Best Results</Text>
-          <View style={styles.tip}>
-            <Ionicons name="checkmark-circle" size={20} color="#10b981" />
-            <Text style={styles.tipText}>Record from the side angle</Text>
+          <View style={styles.tipsList}>
+            <View style={styles.tip}>
+              <View style={styles.tipIcon}>
+                <Ionicons name="camera" size={16} color="rgba(255, 255, 255, 0.9)" />
+              </View>
+              <Text style={styles.tipText}>Record from the side angle</Text>
+            </View>
+            <View style={styles.tip}>
+              <View style={styles.tipIcon}>
+                <Ionicons name="hand-left" size={16} color="rgba(255, 255, 255, 0.9)" />
+              </View>
+              <Text style={styles.tipText}>Keep the camera steady</Text>
+            </View>
+            <View style={styles.tip}>
+              <View style={styles.tipIcon}>
+                <Ionicons name="sunny" size={16} color="rgba(255, 255, 255, 0.9)" />
+              </View>
+              <Text style={styles.tipText}>Ensure good lighting</Text>
+            </View>
+            <View style={styles.tip}>
+              <View style={styles.tipIcon}>
+                <Ionicons name="fitness" size={16} color="rgba(255, 255, 255, 0.9)" />
+              </View>
+              <Text style={styles.tipText}>Capture the full pitch motion</Text>
+            </View>
           </View>
-          <View style={styles.tip}>
-            <Ionicons name="checkmark-circle" size={20} color="#10b981" />
-            <Text style={styles.tipText}>Keep the camera steady</Text>
-          </View>
-          <View style={styles.tip}>
-            <Ionicons name="checkmark-circle" size={20} color="#10b981" />
-            <Text style={styles.tipText}>Ensure good lighting</Text>
-          </View>
-          <View style={styles.tip}>
-            <Ionicons name="checkmark-circle" size={20} color="#10b981" />
-            <Text style={styles.tipText}>Capture the full pitch motion</Text>
-          </View>
-        </View>
+        </GlassCard>
       </View>
     </ScrollView>
   );
 };
 
+const { width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: 'rgba(242, 242, 247, 1)',
   },
   content: {
     padding: 20,
+    paddingTop: 60,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 32,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1f2937',
+    fontSize: 28,
+    fontWeight: '700',
+    color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 8,
+    letterSpacing: -0.3,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#6b7280',
-    marginBottom: 32,
+    fontSize: 17,
+    color: 'rgba(255, 255, 255, 0.7)',
+    textAlign: 'center',
     lineHeight: 24,
+    maxWidth: 280,
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 32,
+    marginBottom: 24,
+    gap: 12,
+  },
+  actionCard: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+    minHeight: 140,
+    justifyContent: 'space-between',
   },
   actionButton: {
-    flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    padding: 24,
-    borderRadius: 12,
-    marginHorizontal: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    width: '100%',
+    marginBottom: 12,
   },
-  actionText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1f2937',
-    marginTop: 12,
+  actionDescription: {
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.7)',
     textAlign: 'center',
+    lineHeight: 18,
   },
   selectedVideo: {
-    backgroundColor: 'white',
     padding: 24,
-    borderRadius: 12,
+    marginBottom: 24,
+  },
+  videoPreview: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 32,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginBottom: 20,
+  },
+  videoIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+  },
+  videoInfo: {
+    flex: 1,
   },
   videoSelectedText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#10b981',
-    marginTop: 12,
+    fontSize: 17,
+    fontWeight: '600',
+    color: 'rgba(255, 255, 255, 0.9)',
+    marginBottom: 4,
   },
   videoPath: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginTop: 4,
-    marginBottom: 20,
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.7)',
     maxWidth: '100%',
   },
   uploadButton: {
-    backgroundColor: '#1e40af',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-  },
-  uploadButtonDisabled: {
-    opacity: 0.6,
-  },
-  uploadButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 8,
+    width: '100%',
   },
   tips: {
-    backgroundColor: 'white',
     padding: 20,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   tipsTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1f2937',
+    fontSize: 20,
+    fontWeight: '600',
+    color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 16,
+  },
+  tipsList: {
+    gap: 12,
   },
   tip: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+  },
+  tipIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
   },
   tipText: {
-    fontSize: 14,
-    color: '#4b5563',
-    marginLeft: 12,
+    fontSize: 15,
+    color: 'rgba(255, 255, 255, 0.8)',
+    lineHeight: 20,
+    flex: 1,
   },
 });
 

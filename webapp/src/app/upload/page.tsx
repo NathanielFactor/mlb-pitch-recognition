@@ -103,7 +103,7 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <motion.div 
@@ -112,13 +112,10 @@ export default function UploadPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex justify-center mb-4">
-            <BaseballIcon size={48} spinning={uploadStatus === 'processing'} />
-          </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-900 to-green-700 bg-clip-text text-transparent mb-4">
+          <h1 className="text-4xl font-bold text-white mb-4">
             Upload Pitch Video
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-white/70 max-w-2xl mx-auto">
             Upload a video of a baseball pitch to get AI-powered analysis with professional-grade accuracy
           </p>
         </motion.div>
@@ -135,18 +132,14 @@ export default function UploadPage() {
               <Card className="overflow-hidden">
                 <div
                   {...getRootProps()}
-                  className={`relative p-16 text-center cursor-pointer transition-all duration-300 ${
+                  className={`relative p-16 text-center cursor-pointer transition-all duration-300 bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl ${
                     isDragActive
-                      ? 'bg-gradient-to-br from-blue-50 to-green-50 border-2 border-blue-400 border-dashed'
-                      : 'bg-gradient-to-br from-gray-50 to-blue-50 hover:from-blue-50 hover:to-green-50 border-2 border-gray-300 border-dashed hover:border-blue-400'
+                      ? 'border-white/40 bg-white/15'
+                      : 'hover:bg-white/15 hover:border-white/30'
                   }`}
                 >
                   <input {...getInputProps()} />
                   
-                  {/* Baseball field background effect */}
-                  <div className="absolute inset-0 opacity-5">
-                    <div className="field-gradient h-full w-full" />
-                  </div>
                   
                   <motion.div
                     className="relative z-10"
@@ -158,22 +151,22 @@ export default function UploadPage() {
                         <motion.div
                           initial={{ scale: 0.8 }}
                           animate={{ scale: 1.2 }}
-                          className="w-20 h-20 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center"
+                          className="w-20 h-20 bg-white/25 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center"
                         >
                           <Upload className="w-10 h-10 text-white" />
                         </motion.div>
                       ) : (
-                        <div className="w-20 h-20 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center">
+                        <div className="w-20 h-20 bg-white/15 backdrop-blur-md border border-white/25 rounded-full flex items-center justify-center">
                           <FileVideo className="w-10 h-10 text-white" />
                         </div>
                       )}
                     </div>
 
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-2xl font-bold text-white mb-2">
                       {isDragActive ? 'Drop your video here!' : 'Upload Your Pitch Video'}
                     </h3>
                     
-                    <p className="text-lg text-gray-600 mb-4">
+                    <p className="text-lg text-white/70 mb-4">
                       {isDragActive 
                         ? 'Release to start the analysis' 
                         : 'Drag and drop a video file here, or click to select'
@@ -207,17 +200,17 @@ export default function UploadPage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <Card gradient glow>
+              <Card variant="elevated">
                 <div className="p-8">
                   <div className="flex items-center justify-center mb-6">
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                      className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full"
+                      className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full"
                     />
                   </div>
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Uploading Video</h3>
+                    <h3 className="text-2xl font-bold text-white mb-2">Uploading Video</h3>
                     <p className="text-gray-600 mb-4">
                       {statusMessage || `Uploading ${uploadedFile?.name}`}
                     </p>
@@ -253,7 +246,7 @@ export default function UploadPage() {
                   </div>
                   
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-2xl font-bold text-white mb-2">
                       Analyzing Pitch
                     </h3>
                     <p className="text-gray-600 mb-6">
@@ -395,7 +388,7 @@ export default function UploadPage() {
                         <div className="text-3xl font-bold text-blue-600">
                           {predictionResult.processing_time ? predictionResult.processing_time.toFixed(1) : '0.0'}s
                         </div>
-                        <div className="text-sm text-gray-500 mt-2">
+                        <div className="text-sm text-white/50 mt-2">
                           Lightning fast analysis
                         </div>
                       </Card>
@@ -414,7 +407,7 @@ export default function UploadPage() {
                         <div className="text-lg font-bold text-purple-600 truncate">
                           {uploadedFile?.name}
                         </div>
-                        <div className="text-sm text-gray-500 mt-2">
+                        <div className="text-sm text-white/50 mt-2">
                           {((uploadedFile?.size || 0) / 1024 / 1024).toFixed(1)} MB
                         </div>
                       </Card>
@@ -467,7 +460,7 @@ export default function UploadPage() {
                       </div>
                     </motion.div>
                     
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    <h3 className="text-2xl font-bold text-white mb-2">
                       Processing Failed
                     </h3>
                     <p className="text-gray-600 mb-6">
