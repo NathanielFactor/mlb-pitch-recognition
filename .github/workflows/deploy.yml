@@ -140,8 +140,10 @@ jobs:
           # Wait for deployment to be ready
           sleep 30
           
-          # Get deployment URL from Vercel
-          DEPLOYMENT_URL=$(vercel ls --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} | grep -E "https://.*\.vercel\.app" | head -1 | awk '{print $2}')
+          # Get deployment URL from Vercel (extract from production deployment)
+          DEPLOYMENT_URL=$(vercel ls --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} | grep "Production" | grep "Ready" | head -1 | grep -oE "https://[^[:space:]]+")
+          
+          echo "Deployment URL: ${DEPLOYMENT_URL}"
           
           # Health check
           curl -f "${DEPLOYMENT_URL}/api/health" || exit 1
@@ -150,7 +152,7 @@ jobs:
         if: success()
         run: |
           echo "🎉 Production deployment successful!"
-          DEPLOYMENT_URL=$(vercel ls --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} | grep -E "https://.*\.vercel\.app" | head -1 | awk '{print $2}')
+          DEPLOYMENT_URL=$(vercel ls --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} | grep "Production" | grep "Ready" | head -1 | grep -oE "https://[^[:space:]]+")
           echo "App URL: ${DEPLOYMENT_URL}"
           
       - name: Notify Failure
