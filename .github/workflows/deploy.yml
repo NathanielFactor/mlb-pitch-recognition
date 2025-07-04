@@ -140,14 +140,18 @@ jobs:
           # Wait for deployment to be ready
           sleep 30
           
-          # Health check (replace with your actual domain)
-          curl -f https://your-app.vercel.app/api/health || exit 1
+          # Get deployment URL from Vercel
+          DEPLOYMENT_URL=$(vercel ls --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} | grep -E "https://.*\.vercel\.app" | head -1 | awk '{print $2}')
+          
+          # Health check
+          curl -f "${DEPLOYMENT_URL}/api/health" || exit 1
           
       - name: Notify Success
         if: success()
         run: |
           echo "🎉 Production deployment successful!"
-          echo "App URL: https://your-app.vercel.app"
+          DEPLOYMENT_URL=$(vercel ls --token=${{ secrets.VERCEL_TOKEN }} --scope=${{ secrets.VERCEL_ORG_ID }} | grep -E "https://.*\.vercel\.app" | head -1 | awk '{print $2}')
+          echo "App URL: ${DEPLOYMENT_URL}"
           
       - name: Notify Failure
         if: failure()
