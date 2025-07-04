@@ -37,13 +37,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include Vercel-optimized routers with API prefix
+# Include Vercel-optimized routers with API prefix to match vercel.json routing
 app.include_router(vercel_upload.router, prefix="/api", tags=["upload"])
 app.include_router(vercel_predict.router, prefix="/api", tags=["predict"])
 
 @app.get("/")
 async def root():
     return {"message": "MLB Pitch Recognition API", "version": "1.0.0"}
+
+@app.get("/api/test")
+async def test_endpoint():
+    return {"message": "API is working!", "routes": "upload should work at /api/upload"}
 
 @app.get("/api/health")
 async def health_check():

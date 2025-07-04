@@ -12,7 +12,8 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/vercel_app.py"
+      "dest": "/api/vercel_app.py",
+      "methods": ["GET", "POST", "PUT", "DELETE"]
     },
     {
       "src": "/(.*)",
