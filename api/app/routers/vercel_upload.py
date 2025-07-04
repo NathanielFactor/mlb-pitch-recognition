@@ -29,14 +29,28 @@ async def upload_video_vercel(file: UploadFile = File(...)):
             )
     
     # Validate file type
-    file_service.validate_file(file)
+    try:
+        file_service.validate_file(file)
+    except HTTPException as e:
+        print(f"File validation error: {e.detail}")
+        raise
+    
+    # Check database connection before processing
+    from app.services.database_service import database_service
+    if not database_service:
+        raise HTTPException(
+            status_code=503, 
+            detail="Database unavailable. Please check Supabase configuration."
+        )
     
     try:
         # Save uploaded file (this will be in /tmp on Vercel)
         job_id, file_path = await file_service.save_uploaded_file(file)
+        print(f"File saved successfully: {job_id}, {file_path}")
         
         # Start prediction process with Vercel-optimized service
         await vercel_ml_service.start_prediction(job_id, file_path, file.filename)
+        print(f"Prediction started for job: {job_id}")
         
         return UploadResponse(
             job_id=job_id,
@@ -47,7 +61,9 @@ async def upload_video_vercel(file: UploadFile = File(...)):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+        error_msg = f"Upload failed: {str(e)}"
+        print(f"Upload error: {error_msg}")
+        raise HTTPException(status_code=500, detail=error_msg)
 
 @router.get("/upload/health")
 async def upload_health():

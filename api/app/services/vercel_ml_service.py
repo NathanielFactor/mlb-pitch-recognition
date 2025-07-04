@@ -52,12 +52,18 @@ class VercelMLService:
     async def start_prediction(self, job_id: str, file_path: str, filename: str) -> None:
         """Start async prediction process optimized for Vercel"""
         
-        # Create database record if database is available
-        if database_service:
-            try:
-                await database_service.create_prediction(job_id, filename)
-            except Exception as e:
-                print(f"Database error creating prediction: {e}")
+        # Validate database connection before starting
+        if not database_service:
+            raise Exception("Database service unavailable - cannot start prediction")
+        
+        # Create database record
+        try:
+            await database_service.create_prediction(job_id, filename)
+            print(f"Database record created for job: {job_id}")
+        except Exception as e:
+            error_msg = f"Database error creating prediction: {e}"
+            print(error_msg)
+            raise Exception(error_msg)
         
         # Start background processing (async to avoid timeout)
         asyncio.create_task(self._process_video_vercel(job_id, file_path, filename))
@@ -67,25 +73,34 @@ class VercelMLService:
         start_time = time.time()
         
         try:
+            print(f"Starting video processing for job: {job_id}")
+            
             # Load models lazily
             await self._load_models_lazy()
+            print(f"Models loaded for job: {job_id}")
             
             # Quick video validation
             await asyncio.sleep(0.1)  # Simulate quick validation
+            print(f"Video validated for job: {job_id}")
             
             # Optimized frame extraction (process fewer frames for speed)
             await asyncio.sleep(0.3)  # Simulate faster frame extraction
+            print(f"Frames extracted for job: {job_id}")
             
             # Lightweight CNN inference
             await asyncio.sleep(0.5)  # Simulate optimized CNN
+            print(f"CNN processing completed for job: {job_id}")
             
             # Fast LSTM processing
             await asyncio.sleep(0.3)  # Simulate optimized LSTM
+            print(f"LSTM processing completed for job: {job_id}")
             
             # Generate prediction
             pitch_type = random.choice(self.PITCH_TYPES)
             confidence = random.uniform(0.75, 0.95)
             processing_time = time.time() - start_time
+            
+            print(f"Prediction generated for job {job_id}: {pitch_type} ({confidence:.2f})")
             
             # Update database with results
             if database_service:
@@ -97,18 +112,23 @@ class VercelMLService:
                         confidence=confidence,
                         processing_time=processing_time
                     )
+                    print(f"Database updated successfully for job: {job_id}")
                 except Exception as e:
-                    print(f"Database error updating prediction: {e}")
+                    error_msg = f"Database error updating prediction: {e}"
+                    print(error_msg)
+                    raise Exception(error_msg)
             
             # Clean up temporary files to save space
             try:
                 if os.path.exists(file_path):
                     os.remove(file_path)
-            except:
-                pass
+                    print(f"Temporary file cleaned up for job: {job_id}")
+            except Exception as cleanup_error:
+                print(f"Warning: Failed to cleanup file for job {job_id}: {cleanup_error}")
                 
         except Exception as e:
             error_message = str(e)
+            print(f"Processing failed for job {job_id}: {error_message}")
             
             # Update database with error
             if database_service:
@@ -118,6 +138,7 @@ class VercelMLService:
                         status="failed",
                         error_message=error_message
                     )
+                    print(f"Database updated with error for job: {job_id}")
                 except Exception as db_error:
                     print(f"Database error updating failed prediction: {db_error}")
     

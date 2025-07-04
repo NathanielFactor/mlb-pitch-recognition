@@ -30,11 +30,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://*.vercel.app",
-        "https://your-domain.com",  # Replace with custom domain later
-        "http://localhost:3000",  # For local development
+        "*"  # Allow all origins for now to debug upload issues
     ],
-    allow_credentials=True,
+    allow_credentials=False,  # Set to False when using allow_origins=["*"]
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
@@ -49,10 +47,29 @@ async def root():
 
 @app.get("/api/health")
 async def health_check():
+    # Check environment variables
+    env_status = {
+        "supabase_url": bool(settings.SUPABASE_URL),
+        "supabase_key": bool(settings.SUPABASE_KEY),
+        "supabase_service_key": bool(settings.SUPABASE_SERVICE_KEY),
+        "storage_bucket": bool(settings.SUPABASE_STORAGE_BUCKET)
+    }
+    
+    # Check database connection
+    db_status = "disconnected"
+    try:
+        from app.services.database_service import database_service
+        if database_service:
+            db_status = "connected"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+    
     return {
         "status": "healthy", 
         "mock_mode": settings.MOCK_MODE,
-        "environment": "production"
+        "environment": "production",
+        "environment_variables": env_status,
+        "database_status": db_status
     }
 
 # Mangum handler Vercel compatibility
