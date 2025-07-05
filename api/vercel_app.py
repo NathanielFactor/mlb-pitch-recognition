@@ -76,9 +76,5 @@ async def health_check():
         "database_status": db_status
     }
 
-# Mangum handler for Vercel compatibility
+# Create the handler that Vercel will call
 handler = Mangum(app, lifespan="off")
-
-# Export the handler as the default export for Vercel
-def app_handler(request, context=None):
-    return handler(request, context)

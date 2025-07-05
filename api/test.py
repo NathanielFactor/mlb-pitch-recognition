@@ -1,19 +1,9 @@
-from fastapi import FastAPI
-from mangum import Mangum
-
-app = FastAPI()
-
-@app.get("/")
-def root():
-    return {"message": "Simple test API working"}
-
-@app.get("/test")
-def test():
-    return {"status": "success", "message": "GET endpoint working"}
-
-@app.post("/upload")
-def upload():
-    return {"status": "success", "message": "POST endpoint working", "method": "POST"}
-
-# Handler for Vercel
-handler = Mangum(app)
+def handler(request, context):
+    """Simple test handler for Vercel"""
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Content-Type': 'application/json',
+        },
+        'body': '{"message": "Python function is working!", "path": "' + str(request.get('path', 'unknown')) + '"}'
+    }
