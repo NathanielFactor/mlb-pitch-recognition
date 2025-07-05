@@ -5,14 +5,14 @@
       "use": "@vercel/next"
     },
     {
-      "src": "api/vercel_app.py",
+      "src": "api/test.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/vercel_app.py"
+      "dest": "/api/test.py"
     },
     {
       "src": "/(.*)",
