@@ -1,7 +1,6 @@
 # cnn_model.py
-import torch
 import torch.nn as nn
-import torchvision.models as models
+from torchvision import models
 
 class CNNFeatureExtractor(nn.Module):
     def __init__(self, output_dim=512):
