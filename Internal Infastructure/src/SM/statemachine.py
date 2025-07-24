@@ -1,5 +1,10 @@
-from transitions import Machine
 import torch
+from torchvision import transforms
+
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from models import cnn_model
 from models import lstm_model
@@ -7,21 +12,11 @@ from vision import hsv_filter
 from vision import video_utils
 from data import data_loader
 
+
 class PitchRecognitionSM:
     states = ['idle', 'video_received', 'preprocessing', 'feature_extraction', 'classification', 'result_output', 'error_handling']
 
     def __init__(self):
-        self.machine = Machine(model=self, states=PitchRecognitionSM.states, initial='idle')
-        self.machine.add_transition(trigger='upload', source='idle', dest='video_received', after='validate_video')
-        self.machine.add_transition(trigger='preprocess', source='video_received', dest='preprocessing', after='extract_frames_and_filter')
-        self.machine.add_transition(trigger='extract_features', source='preprocessing', dest='feature_extraction', after='run_cnn')
-        self.machine.add_transition(trigger='classify', source='feature_extraction', dest='classification', after='run_lstm')
-        self.machine.add_transition(trigger='output_result', source='classification', dest='result_output', after='send_result')
-        self.machine.add_transition(trigger='reset', source='result_output', dest='idle')
-
-        self.machine.add_transition(trigger='fail', source='*', dest='error_handling', after='handle_error')
-        self.machine.add_transition(trigger='retry', source='error_handling', dest='idle')
-
         # Data attributes
         self.video_path = None
         self.frames = None
@@ -43,7 +38,6 @@ class PitchRecognitionSM:
 
     def validate_video(self):
         # Example: check if video exists and readable
-        import os
         if self.video_path is None or not os.path.isfile(self.video_path):
             print(f"Error: video file not found at {self.video_path}")
             self.fail()
@@ -57,14 +51,13 @@ class PitchRecognitionSM:
             self.frames = video_utils.extract_frames(self.video_path, num_frames=16)
             self.filtered_frames = [hsv_filter.apply(frame) for frame in self.frames]
             print(f"Extracted and filtered {len(self.filtered_frames)} frames")
-            self.extract_features()
+            self.extract_features() 
         except Exception as e:
             print(f"Error in preprocessing: {e}")
             self.fail()
 
     def run_cnn(self):
         try:
-            import torchvision.transforms as transforms
             preprocess = transforms.Compose([
                 transforms.ToPILImage(),
                 transforms.Resize((224, 224)),

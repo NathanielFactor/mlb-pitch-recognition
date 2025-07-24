@@ -2,7 +2,7 @@ import cv2
 import torch
 import numpy as np
 from torchvision import transforms
-from vision.hsv_filter import HSV_Filter, MIN_AREA, MAX_AREA  # your exact filter and constants
+from vision.hsv_filter import HSV_Filter # your exact filter and constants
 
 # Define transforms for CNN input
 transform = transforms.Compose([
