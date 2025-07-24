@@ -1,3 +1,4 @@
+# Webapp packages
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 python-multipart==0.0.6
@@ -7,3 +8,13 @@ passlib[bcrypt]==1.7.4
 aiofiles==23.2.1
 supabase==2.7.4
 mangum==0.17.0
+
+# Backend / ML packages
+torch>=2.1.0
+torchvision
+opencv-python
+numpy
+pandas
+scikit-learn
+matplotlib
+tqdm
