@@ -20,24 +20,21 @@ from app.core.config import settings
 app = FastAPI(
     title="MLB Pitch Recognition API",
     description="API for classifying MLB pitch types from video clips",
-    version="1.0.0",
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
-    openapi_url="/api/openapi.json"
+    version="1.0.0"
 )
 
 # Configure CORS for production
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "*"  # Allow all origins for now to debug upload issues
+        "*"  # Allow all origins for debugging
     ],
     allow_credentials=False,  # Set to False when using allow_origins=["*"]
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
 
-# Include unified routers - no prefix needed since vercel.json routes /api/* to this app
+# Include unified routers - no prefix needed since vercel.json routes /api/* to this function
 app.include_router(unified_upload.router, tags=["upload"])
 app.include_router(unified_predict.router, tags=["predict"])
 
@@ -45,15 +42,15 @@ app.include_router(unified_predict.router, tags=["predict"])
 async def root():
     return {"message": "MLB Pitch Recognition API", "version": "1.0.0"}
 
-@app.get("/api/test")
+@app.get("/test")
 async def test_endpoint():
     return {"message": "API is working!", "routes": "upload should work at /api/upload"}
 
-@app.post("/api/upload-direct")
+@app.post("/upload-direct")
 async def upload_direct_test():
     return {"message": "Direct POST route works!", "method": "POST"}
 
-@app.get("/api/health")
+@app.get("/health")
 async def health_check():
     # Check environment variables
     env_status = {
@@ -75,7 +72,7 @@ async def health_check():
     return {
         "status": "healthy", 
         "mock_mode": settings.MOCK_MODE,
-        "environment": "production",
+        "environment": "vercel",
         "environment_variables": env_status,
         "database_status": db_status
     }
