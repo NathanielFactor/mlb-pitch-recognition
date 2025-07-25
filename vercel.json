@@ -1,9 +1,14 @@
 {
-  "functions": {
-    "api/*.py": {
-      "runtime": "python3.12"
+  "builds": [
+    {
+      "src": "webapp/package.json", 
+      "use": "@vercel/next"
+    },
+    {
+      "src": "api/test.py",
+      "use": "@vercel/python"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
