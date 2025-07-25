@@ -4,12 +4,6 @@
       "runtime": "python3.12"
     }
   },
-  "builds": [
-    {
-      "src": "webapp/package.json",
-      "use": "@vercel/next"
-    }
-  ],
   "routes": [
     {
       "src": "/api/(.*)",
