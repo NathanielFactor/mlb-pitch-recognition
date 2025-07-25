@@ -37,9 +37,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include unified routers with API prefix to match vercel.json routing
-app.include_router(unified_upload.router, prefix="/api", tags=["upload"])
-app.include_router(unified_predict.router, prefix="/api", tags=["predict"])
+# Include unified routers - no prefix needed since vercel.json routes /api/* to this app
+app.include_router(unified_upload.router, tags=["upload"])
+app.include_router(unified_predict.router, tags=["predict"])
 
 @app.get("/")
 async def root():
@@ -48,6 +48,10 @@ async def root():
 @app.get("/api/test")
 async def test_endpoint():
     return {"message": "API is working!", "routes": "upload should work at /api/upload"}
+
+@app.post("/api/upload-direct")
+async def upload_direct_test():
+    return {"message": "Direct POST route works!", "method": "POST"}
 
 @app.get("/api/health")
 async def health_check():
