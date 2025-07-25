@@ -12,8 +12,8 @@ import sys
 # Add the api directory to Python path for imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from app.routers import vercel_upload, vercel_predict
-from app.services.vercel_ml_service import vercel_ml_service
+from app.routers import unified_upload, unified_predict
+from app.services.unified_ml_service import ml_service
 from app.core.config import settings
 
 # Create FastAPI app
@@ -37,9 +37,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include Vercel-optimized routers with API prefix to match vercel.json routing
-app.include_router(vercel_upload.router, prefix="/api", tags=["upload"])
-app.include_router(vercel_predict.router, prefix="/api", tags=["predict"])
+# Include unified routers with API prefix to match vercel.json routing
+app.include_router(unified_upload.router, prefix="/api", tags=["upload"])
+app.include_router(unified_predict.router, prefix="/api", tags=["predict"])
 
 @app.get("/")
 async def root():

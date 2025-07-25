@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import upload, predict
+from app.routers import unified_upload, unified_predict
 from app.core.config import settings
 
 app = FastAPI(
@@ -19,8 +19,8 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(upload.router, prefix="/api", tags=["upload"])
-app.include_router(predict.router, prefix="/api", tags=["predict"])
+app.include_router(unified_upload.router, prefix="/api", tags=["upload"])
+app.include_router(unified_predict.router, prefix="/api", tags=["predict"])
 
 @app.get("/")
 async def root():
