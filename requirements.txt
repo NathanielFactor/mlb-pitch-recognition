@@ -7,7 +7,7 @@ supabase==2.0.0
 pydantic==2.5.0
 
 # ML Dependencies (if needed for future integration)
-torch==2.1.0
+torch>=2.5.0
 opencv-python
 numpy
 matplotlib
