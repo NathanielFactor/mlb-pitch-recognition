@@ -54,7 +54,11 @@ class ApiClient {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await fetch(`${this.baseUrl}/api/upload`, {
+    // Ensure no double slashes in URL
+    const url = `${this.baseUrl.replace(/\/$/, '')}/api/upload`;
+    console.log('Making API call to:', url); // Debug logging
+    
+    const response = await fetch(url, {
       method: 'POST',
       body: formData,
     });
@@ -68,7 +72,8 @@ class ApiClient {
   }
 
   async getJobStatus(jobId: string): Promise<StatusResponse> {
-    const response = await fetch(`${this.baseUrl}/api/status/${jobId}`);
+    const url = `${this.baseUrl.replace(/\/$/, '')}/api/status/${jobId}`;
+    const response = await fetch(url);
     
     if (!response.ok) {
       const error = await response.json().catch(() => ({ detail: 'Failed to get status' }));
@@ -79,7 +84,8 @@ class ApiClient {
   }
 
   async getPredictionResult(jobId: string): Promise<PredictionResult> {
-    const response = await fetch(`${this.baseUrl}/api/predict/${jobId}`);
+    const url = `${this.baseUrl.replace(/\/$/, '')}/api/predict/${jobId}`;
+    const response = await fetch(url);
     
     if (!response.ok) {
       const error = await response.json().catch(() => ({ detail: 'Failed to get prediction' }));
@@ -90,7 +96,8 @@ class ApiClient {
   }
 
   async checkHealth(): Promise<{ status: string; mock_mode: boolean }> {
-    const response = await fetch(`${this.baseUrl}/api/health`);
+    const url = `${this.baseUrl.replace(/\/$/, '')}/api/health`;
+    const response = await fetch(url);
     
     if (!response.ok) {
       throw new Error('Health check failed');
