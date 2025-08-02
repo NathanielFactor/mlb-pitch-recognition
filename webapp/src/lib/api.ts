@@ -10,6 +10,11 @@ const getApiBaseUrl = () => {
     return process.env.NEXT_PUBLIC_API_URL;
   }
   
+  // Production fallback: Use Render API URL when deployed on Vercel
+  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+    return 'https://mlb-pitch-api-albt.onrender.com';
+  }
+  
   // Development: Use localhost backend
   return 'http://localhost:8000';
 };

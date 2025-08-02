@@ -26,11 +26,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://mlb-pitch-recognition-webapp.vercel.app",  # Production Vercel frontend
-        "http://localhost:3000",  # Local development
-        "https://*.vercel.app",  # Vercel preview deployments
+        "*"  # Temporarily allow all origins for testing
     ],
-    allow_credentials=True,
+    allow_credentials=False,  # Must be False when using allow_origins=["*"]
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
