@@ -1,14 +1,14 @@
 # FastAPI Backend Dependencies for Render Deployment
-fastapi==0.104.1
-uvicorn==0.24.0
-python-multipart==0.0.6
-aiofiles==23.2.1
-supabase==2.0.0
-pydantic==2.5.0
+fastapi>=0.100.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+aiofiles>=23.0.0
+supabase>=2.0.0
+pydantic>=2.6.0
 
-# ML Dependencies (if needed for future integration)
-torch>=2.5.0
-opencv-python
-numpy
-matplotlib
-scikit-learn
+# ML Dependencies (if needed for future integration) - commented out to reduce build time
+# torch>=2.5.0
+# opencv-python
+# numpy
+# matplotlib
+# scikit-learn
