@@ -1,14 +1,11 @@
 {
-  "functions": {
-    "api/index.py": {
-      "runtime": "python3.12"
-    }
-  },
-  "routes": [
+  "builds": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    },
+      "src": "webapp/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
     {
       "src": "/(.*)",
       "dest": "/webapp/$1"

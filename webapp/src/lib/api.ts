@@ -1,16 +1,16 @@
 // Dynamic API URL configuration for different environments
 const getApiBaseUrl = () => {
-  // Production: Use Vercel deployment URL
+  // Production: Use Render backend URL (set via environment variable)
+  if (process.env.NEXT_PUBLIC_RENDER_API_URL) {
+    return process.env.NEXT_PUBLIC_RENDER_API_URL;
+  }
+  
+  // Fallback: Legacy API URL environment variable
   if (process.env.NEXT_PUBLIC_API_URL) {
     return process.env.NEXT_PUBLIC_API_URL;
   }
   
-  // Vercel preview/production: Use same domain for API
-  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
-    return `https://${window.location.hostname}`;
-  }
-  
-  // Development: Use localhost
+  // Development: Use localhost backend
   return 'http://localhost:8000';
 };
 

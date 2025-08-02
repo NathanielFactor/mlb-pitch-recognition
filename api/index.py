@@ -1,11 +1,10 @@
 """
-Vercel-compatible FastAPI application entry point.
-This file serves as the main handler for Vercel serverless functions.
+Render-compatible FastAPI application entry point.
+This file serves as the main FastAPI app for deployment on Render.
 """
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from mangum import Mangum
 import os
 import sys
 
@@ -23,20 +22,22 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configure CORS for production
+# Configure CORS for cross-origin requests (Vercel frontend → Render backend)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "*"  # Allow all origins for debugging
+        "https://mlb-pitch-recognition-webapp.vercel.app",  # Production Vercel frontend
+        "http://localhost:3000",  # Local development
+        "https://*.vercel.app",  # Vercel preview deployments
     ],
-    allow_credentials=False,  # Set to False when using allow_origins=["*"]
+    allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
 
-# Include unified routers - no prefix needed since vercel.json routes /api/* to this function
-app.include_router(unified_upload.router, tags=["upload"])
-app.include_router(unified_predict.router, tags=["predict"])
+# Include unified routers with /api prefix for Render deployment
+app.include_router(unified_upload.router, prefix="/api", tags=["upload"])
+app.include_router(unified_predict.router, prefix="/api", tags=["predict"])
 
 @app.get("/")
 async def root():
@@ -72,10 +73,7 @@ async def health_check():
     return {
         "status": "healthy", 
         "mock_mode": settings.MOCK_MODE,
-        "environment": "vercel",
+        "environment": "render",
         "environment_variables": env_status,
         "database_status": db_status
     }
-
-# Create the handler that Vercel will call
-handler = Mangum(app, lifespan="off")
